@@ -1,0 +1,88 @@
+
+
+
+#map {
+    height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar{
+    opacity: 0.85;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    color: white;
+    flex-wrap: wrap;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#010056+0,540040+100 */
+    background: rgb(1,0,86); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(1,0,86,1) 0%, rgba(84,0,64,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  rgba(1,0,86,1) 0%,rgba(84,0,64,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  rgba(1,0,86,1) 0%,rgba(84,0,64,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#010056', endColorstr='#540040',GradientType=1 ); /* IE6-9 */
+}
+
+.nav-bar .left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.title-en {
+    margin-left: 5px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.nav-bar .right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.name {
+    padding: 0 15px 0 5px;
+}
+
+.pic{
+    border-radius: 50%;
+    height: 40px;
+}
+
+.goHome{
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    line-height: 100px;
+    text-align: center;
+}
+
+.post{
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    line-height: 100px;
+    text-align: center;
+}
+
+
