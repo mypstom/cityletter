@@ -11,9 +11,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="./main.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmGNq8fF3p1uWxiS11S-dX9_HndPpKQUk&callback=initMap"
 async defer></script>
-	<script src="./main.js"></script>
 	<link rel="stylesheet" type="text/css" href="./reset.css">
 	<link rel="stylesheet" type="text/css" href="./main.css">
 </head>
@@ -31,8 +31,30 @@ async defer></script>
 		</div>
 	</div>
 	<div id="map"></div>
-	<div class="goHome">Home</div>
-	<div class="post">Post</div>
+	<div class="goHome">信件匣</div>
+	<div class="post">寫信</div>
+	<div class="post-pop" style="display: none">
+		<div class="form-group">
+			<label>信件標題</label>
+			<input type="email" class="form-control" id="inputTitle" aria-describedby="emailHelp">
+		</div>
+		<div class="form-group">
+			<label>信件內容</label>
+			<textarea class="form-control" id="inputContent" rows="3"></textarea>
+		</div>
+		<button class="send" type="submit" class="btn btn-primary">留下信件</button>
+	</div>
+	<div class="pick-pop" style="display: none">
+		<div class="form-group">
+			<label>信件標題</label>
+			<input type="email" class="form-control" id="inputTitle2" aria-describedby="emailHelp">
+		</div>
+		<div class="form-group">
+			<label>信件內容</label>
+			<textarea class="form-control" id="inputContent2" rows="3"></textarea>
+		</div>
+		<button class="send2" type="submit" class="btn btn-primary">OK</button>
+	</div>
 </body>
 
 </html>

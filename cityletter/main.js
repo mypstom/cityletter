@@ -41,14 +41,9 @@ $(document).ready(function(){
                 console.log("已經有帳號了");
             }
 
-            firebase.database().ref('/posts/'+loginUser.uid).once("value", function(posts) {
-                posts.forEach(function(post) {
-                    //讀取 目前 所有的 瓶中信資料
-                    //要放入地圖的 marker之中
-                    console.log(post.val().title);
-                    console.log(post.val().content); 
-                });
-            });
+            updateLetters();
+
+            
         } else {
             $("#fbLoginBtn").show();
             $("#signoutSmtBtn").hide();
@@ -93,13 +88,13 @@ $(document).ready(function(){
     });
 
     $(".title-en").on("click", function(){
-        var chicago = {lat: 41.850, lng: -87.650};
-        map.setCenter(chicago)
+        // var chicago = {lat: 41.850, lng: -87.650};
+        // map.setCenter(chicago)
 
     });
 
     $(".goHome").on("click", function(){
-
+        updateLetters();
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
@@ -112,12 +107,16 @@ $(document).ready(function(){
                 
                 map.setCenter(pos);
             }, function() {
-                handleLocationError(true, infoWindow, map.getCenter());
+                // handleLocationError(true, infoWindow, map.getCenter());
             });
         }
     });
 
     $(".post").on("click", function(){
+        $(".post-pop").toggle();
+    });
+
+    $(".send").on("click", function(){
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
@@ -128,24 +127,71 @@ $(document).ready(function(){
                 console.log(pos);
                 firebase.database().ref('/posts/' + loginUser.uid).push().set({
                     user: loginUser.uid,
-                    title: "Test",
-                    content: "content",
-                    position: pos 
+                    title: $("#inputTitle").val(),
+                    content: $("#inputContent").val(),
+                    position: pos,
+                    isPicked: false
                 }).catch(function(error){
                     console.error("送出信件錯誤",error);
                 });
+                $("#inputTitle").val("");
+                $("#inputContent").val("");
+                $(".post-pop").fadeOut();
+                updateLetters();
             }, function() {
             });
         }
     });
+
+    $(".send2").on("click", function(){
+        $(".pick-pop").fadeOut();
+    });
+
+    function updateLetters(){
+        firebase.database().ref('/posts/').once("value", function(users) {
+            users.forEach(function(posts) {
+                posts.forEach(function(post) {
+                    if(!post.val().isPicked){
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(post.val().position.lat, post.val().position.lng),
+                            icon: "https://i.imgur.com/eLA4P9P.png",
+                            map: map,
+                        });
+                        marker.data = post.val();
+
+                        marker.addListener('click', function() {
+                            $(".pick-pop").fadeIn();
+                            $("#inputTitle2").val(this.data.title);
+                            $("#inputContent2").val(this.data.content);
+
+                            console.log(this.data);
+                        });
+                    }
+                    //讀取 目前 所有的 瓶中信資料
+                    //要放入地圖的 marker之中
+                    // console.log(post.val().title);
+                    // console.log(post.val().content); 
+                });
+                
+            });
+        });
+
+    }
+    
+
 });
+
+
+
+
+
 var map ;
 
 function initMap() {
     // Styles a map in night mode.
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 40.674, lng: -73.945},
-      zoom: 30,
+      zoom: 20,
       disableDefaultUI: true,
       styles: [
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
@@ -228,7 +274,7 @@ function initMap() {
         }
       ]
     });
-    var infoWindow = new google.maps.InfoWindow({map: map});
+    // var infoWindow = new google.maps.InfoWindow({map: map});
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -240,8 +286,15 @@ function initMap() {
 
         console.log(pos);
 
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
+        // infoWindow.setPosition(pos);
+        // infoWindow.setContent('我的位置');
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(pos.lat, pos.lng),
+            icon: "https://i.imgur.com/i6mPxji.png",
+            map: map
+        });
+
         map.setCenter(pos);
         }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
